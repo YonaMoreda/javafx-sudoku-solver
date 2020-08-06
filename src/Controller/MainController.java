@@ -7,7 +7,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class MainController {
     @FXML
@@ -21,52 +24,57 @@ public class MainController {
     public void initialize() {
         sudokuModel = new SudokuModel();
         sudokuModel.setController(this);
-        drawGrid();
+        drawGrid(sudokuModel.getGrid());
         setSolveButtonEventAction();
     }
 
     private void setSolveButtonEventAction() {
         solve_button.setOnAction(actionEvent -> {
             sudokuModel.solve();
+//            sudokuModel.printGrid(sudokuModel.getSolvedGrid());
+            updateGrid(sudokuModel.getSolvedGrid());
         });
     }
 
     public void notifyChange() {
-        updateGrid();
-    }
-
-    private void updateGrid() {
-        char[][] grid = sudokuModel.getGrid();
-        for (int r = 0; r < SudokuModel.GRID_SIZE; r++) {
-            for (int c = 0; c < SudokuModel.GRID_SIZE; c++) {
-                Label numberLabel = (Label) sudoku_grid_pane.getChildren().get(r * 9  +  c);
-                assert numberLabel != null;
-
-                numberLabel.setText(Character.toString(grid[r][c]));
-            }
-        }
+//        updateGrid();
+        System.out.println("TO IMPLEMENT");
     }
 
     private Node getGridPaneNode(int r, int c) {
-        System.out.println(sudoku_grid_pane.getChildren());
-        for(Node node : sudoku_grid_pane.getChildren()) {
-            if(GridPane.getRowIndex(node) == r && GridPane.getColumnIndex(node) == c) {
+        for (Node node : sudoku_grid_pane.getChildren()) {
+            if (sudoku_grid_pane.getChildren().indexOf(node) == 0) {
+                continue;
+            }
+            if (GridPane.getRowIndex(node) == r && GridPane.getColumnIndex(node) == c) {
                 return node;
             }
         }
         return null;
     }
 
-    private void drawGrid() {
-        char[][] grid = sudokuModel.getGrid();
+    private void updateGrid(char[][] grid) {
         for (int r = 0; r < SudokuModel.GRID_SIZE; r++) {
             for (int c = 0; c < SudokuModel.GRID_SIZE; c++) {
-                Label numberLabel = new Label(Character.toString(grid[r][c]));
-                numberLabel.setFont(Font.font("Times new roman", 20));
-                GridPane.setHalignment(numberLabel, HPos.CENTER);
-                sudoku_grid_pane.add(numberLabel, r, c);
+
+                Text numberText = (Text) getGridPaneNode(r, c);
+                assert numberText != null;
+                if(numberText.getText().equals(" ")) {
+                    numberText.setFill(Color.LIGHTCORAL);
+                }
+                numberText.setText(Character.toString(grid[r][c]));
             }
         }
     }
 
+    private void drawGrid(char[][] grid) {
+        for (int r = 0; r < SudokuModel.GRID_SIZE; r++) {
+            for (int c = 0; c < SudokuModel.GRID_SIZE; c++) {
+                Text numberText = new Text(Character.toString(grid[r][c]));
+                numberText.setFont(Font.font("Times new roman", 20));
+                GridPane.setHalignment(numberText, HPos.CENTER);
+                sudoku_grid_pane.add(numberText, c, r);
+            }
+        }
+    }
 }

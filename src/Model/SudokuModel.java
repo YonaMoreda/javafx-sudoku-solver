@@ -8,14 +8,37 @@ public class SudokuModel {
 
     public static final int GRID_SIZE = 9;
     private char[][] grid;
+    private char[][] solvedGrid;
     private MainController controller;
+
 
     public SudokuModel() {
         this.grid = getDefaultGrid();
+        this.solvedGrid = new char[GRID_SIZE][];
+        this.solvedGrid[0] = "         ".toCharArray();
+        this.solvedGrid[1] = "         ".toCharArray();
+        this.solvedGrid[2] = "         ".toCharArray();
+        this.solvedGrid[3] = "         ".toCharArray();
+        this.solvedGrid[4] = "         ".toCharArray();
+        this.solvedGrid[5] = "         ".toCharArray();
+        this.solvedGrid[6] = "         ".toCharArray();
+        this.solvedGrid[7] = "         ".toCharArray();
+        this.solvedGrid[8] = "         ".toCharArray();
     }
 
     public SudokuModel(char[][] grid) {
         this.grid = grid;
+        this.solvedGrid = new char[GRID_SIZE][];
+        this.solvedGrid[0] = "         ".toCharArray();
+        this.solvedGrid[1] = "         ".toCharArray();
+        this.solvedGrid[2] = "         ".toCharArray();
+        this.solvedGrid[3] = "         ".toCharArray();
+        this.solvedGrid[4] = "         ".toCharArray();
+        this.solvedGrid[5] = "         ".toCharArray();
+        this.solvedGrid[6] = "         ".toCharArray();
+        this.solvedGrid[7] = "         ".toCharArray();
+        this.solvedGrid[8] = "         ".toCharArray();
+
     }
 
     public char[][] getDefaultGrid() {
@@ -77,13 +100,33 @@ public class SudokuModel {
                         char valueInChar = digitToChar(value);
                         if (isSuitable(valueInChar, r, c)) {
                             grid[r][c] = valueInChar;
-                            controller.notifyChange();
+//                            controller.notifyChange();
                             solve();
                             grid[r][c] = ' ';
                         }
                     }
                     return;
                 }
+            }
+        }
+
+        cloneGrid();
+        System.out.println("HMM SOLVED GRID");
+        printGrid(solvedGrid);
+        System.out.println("HMM SOLVED GRID END ^^\n");
+//        solvedGrid = grid.clone();
+//        printGrid(solvedGrid);
+    }
+
+    private void cloneGrid() {
+
+//        solvedGrid = new char[GRID_SIZE][];
+        for (int r = 0; r < GRID_SIZE; r++) {
+            for (int c = 0; c < GRID_SIZE; c++) {
+                if (grid[r] == null) {
+                    return;
+                }
+                solvedGrid[r][c] = grid[r][c];
             }
         }
     }
@@ -103,14 +146,18 @@ public class SudokuModel {
         for (int r = 0; r < GRID_SIZE; r++) {
             System.out.println(Arrays.toString(grid[r]));
         }
-        System.out.println("---------------------------\n");
+        System.out.println("---------------------------");
     }
 
-    public char[][] getGrid() {
-        return grid;
+    public char[][] getSolvedGrid() {
+        return this.solvedGrid;
     }
 
     public void setController(MainController controller) {
         this.controller = controller;
+    }
+
+    public char[][] getGrid() {
+        return grid;
     }
 }
