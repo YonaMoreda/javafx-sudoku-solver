@@ -15,7 +15,9 @@ public class MainFrame extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("layout.fxml")));
         primaryStage.setTitle("Sudoku Solver");
-        primaryStage.setScene(new Scene(root, 320, 325));
+        Scene scene = new Scene(root, 320, 325);
+        scene.getStylesheets().add("Stylesheet.css");
+        primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image("sudoku-icon.png"));
         primaryStage.show();
     }
