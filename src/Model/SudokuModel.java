@@ -1,7 +1,5 @@
 package Model;
 
-import Controller.MainController;
-
 import java.util.Arrays;
 
 public class SudokuModel {
@@ -9,18 +7,22 @@ public class SudokuModel {
     public static final int GRID_SIZE = 9;
     private char[][] grid;
     private char[][] solvedGrid;
-    private MainController controller;
 
     public SudokuModel() {
         this.grid = getDefaultGrid();
         initializeSolvedGrid();
     }
 
-    private void initializeSolvedGrid() {
-        this.solvedGrid = new char[GRID_SIZE][];
+    public char[][] initializeSudokuGrid() {
+        char[][] returnGrid = new char[GRID_SIZE][];
         for (int i = 0; i < GRID_SIZE; i++) {
-            this.solvedGrid[i] = "         ".toCharArray();
+            returnGrid[i] = "         ".toCharArray();
         }
+        return returnGrid;
+    }
+
+    private void initializeSolvedGrid() {
+        this.solvedGrid = initializeSudokuGrid();
     }
 
     public SudokuModel(char[][] grid) {
@@ -30,17 +32,6 @@ public class SudokuModel {
 
     public char[][] getDefaultGrid() {
         char[][] defaultGrid = new char[GRID_SIZE][];
-
-//        defaultGrid[0] = "53  7    ".toCharArray();
-//        defaultGrid[1] = "6  195   ".toCharArray();
-//        defaultGrid[2] = " 98    6 ".toCharArray();
-//        defaultGrid[3] = "8   6   3".toCharArray();
-//        defaultGrid[4] = "4  8 3  1".toCharArray();
-//        defaultGrid[5] = "7   2   6".toCharArray();
-//        defaultGrid[6] = " 6    28 ".toCharArray();
-//        defaultGrid[7] = "   419  5".toCharArray();
-//        defaultGrid[8] = "    8  79".toCharArray();
-
         defaultGrid[0] = "   26 7 1".toCharArray();
         defaultGrid[1] = "68  7  9 ".toCharArray();
         defaultGrid[2] = "19   45  ".toCharArray();
@@ -70,7 +61,7 @@ public class SudokuModel {
         return grid[row];
     }
 
-    private Boolean checkColumn(int column, char itemForInsertion) {
+    public Boolean checkColumn(int column, char itemForInsertion) {
         char[] gridColumn = getColumn(column);
         return checkGridLine(gridColumn, itemForInsertion);
     }
@@ -92,7 +83,7 @@ public class SudokuModel {
         return getBlock(top, left, grid);
     }
 
-    private char[] getBlock(int top, int left, char[][] grid) {
+    public char[] getBlock(int top, int left, char[][] grid) {
         char[] gridBlock = new char[GRID_SIZE];
         for (int row = top; row < top + 3; row++) {
             for (int col = left; col < left + 3; col++) {
@@ -122,8 +113,8 @@ public class SudokuModel {
                             grid[r][c] = ' ';
                         }
                     }
-                    //tested all 1-9 digits, dead end /or solution return
-//                    System.out.println("Returning / Back tracking");
+                    // tested all 1-9 digits, dead end /or solution return
+                    // Returning / Back tracking
                     return;
                 }
             }
@@ -142,7 +133,7 @@ public class SudokuModel {
         }
     }
 
-    private boolean isSuitable(char value, int r, int c) {
+    public boolean isSuitable(char value, int r, int c) {
         if (!checkRow(r, value)) {
             return false;
         }
@@ -164,11 +155,4 @@ public class SudokuModel {
         return this.solvedGrid;
     }
 
-    public void setController(MainController controller) {
-        this.controller = controller;
-    }
-
-    public char[][] getGrid() {
-        return grid;
-    }
 }

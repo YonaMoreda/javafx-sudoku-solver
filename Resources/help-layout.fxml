@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Help">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextArea editable="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-insets: 0;" text="A Sudoku game solver based on the back-&#10;tracking sudoku solver algorithm." />
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Separator>
+            <Label text="Instructions">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextArea editable="false" prefHeight="60.0" prefWidth="200.0" style="-fx-background-insets: 0;" text="1. Clear the Sudoku grid&#10;2. Enter the desired values&#10;3. Solve" />
+            <Label text="Author" />
+            <Label text="Yona Moreda">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label text="2020" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

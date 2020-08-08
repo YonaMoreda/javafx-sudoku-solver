@@ -3,10 +3,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="345.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="8.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
+            <HBox alignment="TOP_RIGHT" spacing="5.0">
+               <children>
+                  <Button fx:id="clear_button" mnemonicParsing="false" style="-fx-base: red;" text="Clear" />
+                  <Button fx:id="help_button" mnemonicParsing="false" style="-fx-base: #282828;" text="Help" />
+               </children>
+            </HBox>
             <AnchorPane prefHeight="320.0" prefWidth="320.0">
                <children>
                   <GridPane fx:id="sudoku_grid_pane" gridLinesVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -133,7 +139,7 @@
                   </GridPane>
                </children>
             </AnchorPane>
-            <Button fx:id="solve_button" alignment="TOP_LEFT" mnemonicParsing="false" text="Solve" />
+            <Button fx:id="solve_button" alignment="CENTER" mnemonicParsing="false" prefWidth="100.0" style="-fx-base: #282828;" text="Solve" />
          </children>
       </VBox>
    </children>
