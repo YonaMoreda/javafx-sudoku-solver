@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Assertions;
 
 public class SudokuTest {
 
+    /**
+     * testing the sudoku solver function
+     */
     @Test
     public void sudokuSolverTest() {
         SudokuModel mySudokuModel = new SudokuModel();
@@ -23,6 +26,10 @@ public class SudokuTest {
         }
     }
 
+    /**
+     * testing the check for value suitability in a sudoku grid
+     * it checks if item is suitable for insertion (row, column and block)
+     */
     @Test
     public void isSuitableTest() {
         SudokuModel sudokuModel = new SudokuModel();
@@ -35,5 +42,14 @@ public class SudokuTest {
         Assertions.assertFalse(sudokuModel.isSuitable('4', 6, 0));
         Assertions.assertFalse(sudokuModel.isSuitable('8', 8, 8));
         Assertions.assertFalse(sudokuModel.isSuitable('4', 4, 4));
+    }
+
+    /**
+     * checks if a grid itself is valid/inconsistencies in grid (as per a standard sudoku game)
+     */
+    @Test
+    public void isValidSudokuGridTest() {
+        SudokuModel sudokuModel = new SudokuModel();
+        Assertions.assertTrue(sudokuModel.isValidSudokuGrid().z);
     }
 }

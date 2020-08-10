@@ -1,16 +1,20 @@
 package Controller;
 
 import Model.SudokuModel;
+import Model.Tuple;
 import View.HelpView;
 import View.MainFrame;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 public class MainController {
     @FXML
@@ -49,10 +53,28 @@ public class MainController {
 
     private void setSolveButtonEventAction() {
         solve_button.setOnAction(actionEvent -> {
-            sudokuModel = new SudokuModel(readViewGrid());
-            drawGridValues();
-            sudokuModel.solve();
-            drawGridSolution();
+            char[][] readGrid = readViewGrid();
+            Tuple<Integer, Integer, Boolean> isValidTuple = sudokuModel.isValidSudokuGrid(readGrid);
+            if (isValidTuple.z) {
+                sudokuModel = new SudokuModel(readGrid);
+                drawGridValues();
+                sudokuModel.solve();
+                drawGridSolution();
+            } else {
+                Alert invalidGridAlert = new Alert(Alert.AlertType.WARNING);
+                invalidGridAlert.setTitle("INVALID GRID");
+                if (isValidTuple.x == -1) {
+                    invalidGridAlert.setHeaderText("Grid is provided too few number of clues.");
+                    invalidGridAlert.setContentText("The sudoku grid contains 16 or fewer clues.\n\nAccording to the Minimum Number of Clues Problem, 17 or more clues are necessary for a standard game.");
+                } else {
+                    invalidGridAlert.setHeaderText("Grid is invalid for the standard Sudoku");
+                    invalidGridAlert.setContentText("The provided sudoku grid has repetition. Row " + isValidTuple.x + ", Column " + isValidTuple.y + ".");
+                }
+                Stage stage = (Stage) invalidGridAlert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(
+                        new Image(String.valueOf(getClass().getClassLoader().getResource("sudoku-icon.png"))));
+                invalidGridAlert.showAndWait();
+            }
         });
     }
 
@@ -71,7 +93,17 @@ public class MainController {
                         if (textField.getText().equals("")) {
                             returnGrid[r][c] = ' ';
                         } else {
-                            returnGrid[r][c] = textField.getText().charAt(0);
+                            boolean foundDigit = false;
+                            for (char ch : textField.getText().toCharArray()) {
+                                if (Character.isDigit(ch)) {
+                                    returnGrid[r][c] = ch;
+                                    foundDigit = true;
+                                    break;
+                                }
+                            }
+                            if (!foundDigit) {
+                                returnGrid[r][c] = ' ';
+                            }
                         }
                         blockItemIter++;
                     }
@@ -119,14 +151,24 @@ public class MainController {
 
                 char[] blockLine = sudokuModel.getUnsolvedBlock((blockIter / 3) * 3, 3 * (blockIter % 3));
                 for (int i = 0; i < SudokuModel.GRID_SIZE; i++) {
-                    TextField numberText = new TextField(Character.toString(blockLine[i]));
-                    numberText.setFont(Font.font("Times new roman", 20));
-                    numberText.setStyle("-fx-text-fill: black");
+                    TextField numberText = createDigitTextField(blockLine[i]);
                     GridPane.setHalignment(numberText, HPos.CENTER);
                     blockGP.add(numberText, i % 3, i / 3);
                 }
                 blockIter++;
             }
         }
+    }
+
+    private TextField createDigitTextField(char c) {
+        TextField numberText = new TextField(Character.toString(c));
+        numberText.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                numberText.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        numberText.setFont(Font.font("Times new roman", 20));
+        numberText.setStyle("-fx-text-fill: black");
+        return numberText;
     }
 }

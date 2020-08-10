@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * HelpView: small dialogue for displaying the "help" dialogue
+ * based on "help-layout.fxml"
+ */
 public class HelpView extends Stage {
 
     public HelpView(Stage primaryStage) {

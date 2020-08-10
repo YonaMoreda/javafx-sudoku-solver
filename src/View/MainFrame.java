@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+/**
+ * Main view frame for displaying the sudoku application
+ */
 public class MainFrame extends Application {
     private static Stage pStage;
 
